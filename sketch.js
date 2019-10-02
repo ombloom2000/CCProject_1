@@ -8,9 +8,11 @@ var speed;
 //second scene ball explode
 var diam;
 
-//scene 3 raining
+//scene 3 row of balls
 var rainx
 var rainy;
+
+//scene 4 rain of balls
 
 
 function setup() {
@@ -58,10 +60,11 @@ function draw() {
 			ellipse(rainx*i,rainy,15,15);
 		}
 		rainy+=5; //make ellipses fall
-		if(rainy>=height){ //if ellipses hit bottom of screen
-			rainy-=5;//this doesnt work how i want it to yet
-		}
-	}	
+	}
+	if(rainy>2*height/3){ //if row of balls drops below 2/3 of screen
+		fill(255,0,0);//red
+		background(255); //clear background with white
+	}
 }
 	
 			
