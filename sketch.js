@@ -6,6 +6,11 @@ var bally;
 var speed;
 var ymap;
 
+//scene 1 lines
+var x_;
+var y2;
+var change;
+
 //second scene ball explode
 var diam;
 
@@ -32,6 +37,10 @@ function setup() {
   bally=height;
   speed=5;
 
+  //scene 1 lines
+  y2=height/2;
+  x_=0;
+
   //scene 2
   diam = 0;
 
@@ -46,6 +55,7 @@ function setup() {
 }
 
 function draw() { 
+  scene1lines();
   scene1(); //see function below
   if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
     scene1reversedir(); //see function below
@@ -62,12 +72,13 @@ function draw() {
     scene4(); //see function below
   }
   if (count >= 350) { //if countr is 350 (slightly less than the number of balls to be made)
-    background(0); //clear background with black
+    background(255,0,0); //clear background with black
   }
 }
 
 
 function scene1() {
+  noStroke();
   fill(255, 0, 0, opacity); //set fill
   ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
   speed = speed + 1; //increase speed
@@ -80,6 +91,17 @@ function scene1reversedir() {
   speed=speed*-1; //reverse direction of speed variable
 }
 
+function scene1lines(){
+  stroke(255,0,0); //stroke settings
+  strokeWeight(4);
+  change=int(random(-20,30)); //variable change set to random val
+  if(x_<=width){ //while within screen
+  line(x_,height,x_,y2); //make a line from bottom at random height
+   }
+  x_+=30; //move right by 30
+  y2+=change; //change height of line variable
+}
+
 function scene2() {
   background(255); //clear background
   ellipse(width/2, height/2, diam, diam); //make an ellipse //scene 2
@@ -90,7 +112,7 @@ function scene3() {
   for (var i =0; i<=width; i++) { //make ellipses across top of screen
     ellipse(rainx*i, rainy, 15, 15);
   }
-  rainy+=5; //make ellipses fall
+  rainy+=15; //make ellipses fall
 }
 
 function scene4() {
