@@ -52,19 +52,12 @@ function setup() {
 }
 
 function draw() { //scene 1
-	fill(255,0,0,opacity); //set fill
-	ellipse(ballx,bally,20,20); //make an ellipse at ballx, bally
-	speed = speed + 1; //increase speed
-	opacity+=0.3; //increase opacity
-	ballx+=speed; //move ballx
-	bally-=1; //move bally
+	scene1();
 	if(ballx >= width || ballx<=0){ //reverse direction if ball goes out of bounds
-		speed=speed*-1;
+		scene1reversedir(); //see function below
 		 }
 	if(bally<= 0){ //if ball reaches top of screen
-		background(255); //clear background
-		ellipse(width/2, height/2, diam,diam); //make an ellipse //scene 2
-		diam+=40; //expand ellipse
+		scene2(); //see scene 2 below
 		 }
 	if(diam>=width){//if ball fills screen
 		fill(255); //set fill to white
@@ -100,6 +93,26 @@ function draw() { //scene 1
 	if(count >= 200){ //if countr is 200 (slights less than the number of balls to be made)
 		background(0); //clear background with black
 	}
+}
+
+
+function scene1(){
+	fill(255,0,0,opacity); //set fill
+	ellipse(ballx,bally,20,20); //make an ellipse at ballx, bally
+	speed = speed + 1; //increase speed
+	opacity+=0.3; //increase opacity
+	ballx+=speed; //move ballx
+	bally-=1; //move bally
+}
+
+function scene1reversedir(){ 
+	speed=speed*-1; //reverse direction of speed variable
+}
+
+function scene2(){
+	background(255); //clear background
+	ellipse(width/2, height/2, diam,diam); //make an ellipse //scene 2
+	diam+=40; //expand ellipse
 }
 
 
