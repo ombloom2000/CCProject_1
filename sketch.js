@@ -17,6 +17,7 @@ var rainy;
 //scene 4 rain of balls
 var balls;
 var numballs;
+var count;
 
 
 function setup() {
@@ -44,8 +45,9 @@ function setup() {
 
 
 	//scene 4
-	balls = new Array(200); //make an array length 100
+	balls = new Array(250); //make an array length 250
 	numballs = 0;
+	count = 0;
 
 }
 
@@ -81,6 +83,7 @@ function draw() { //scene 1
 		//to work with the rest of my code
 		balls[numballs] = new Ball(); //create a new Ball object at array position of numballs 
 		numballs++; //increase numballs by 1
+		count++; //increase count each time a new ball is made
 			if(numballs>=balls.length){ //if number of balls is greater than the array length
 				numballs = 0; //set numballs to 0
 			}
@@ -88,8 +91,14 @@ function draw() { //scene 1
 			for(i = 0;i<numballs;i++){ //for each Ball object in the array //scene 4
 				balls[i].move(); //move and display the ball
 				balls[i].display();
-
+				
 			}
+			
+
+			
+	}
+	if(count >= 200){ //if countr is 200 (slights less than the number of balls to be made)
+		background(0); //clear background with black
 	}
 }
 
