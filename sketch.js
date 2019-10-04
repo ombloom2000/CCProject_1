@@ -4,19 +4,16 @@ var opacity;
 var ballx;
 var bally;
 var speed;
-var ymap;
 
 //scene 1 lines
-var x_;
 var y2;
-var change;
 
 //second scene ball explode
 var diam;
 
 //scene 3 row of balls
 var rainx
-  var rainy;
+var rainy;
 
 //scene 4 rain of balls
 var balls;
@@ -38,8 +35,7 @@ function setup() {
   speed=5;
 
   //scene 1 lines
-  y2=height/2;
-  x_=0;
+  y2=height;
 
   //scene 2
   diam = 0;
@@ -55,7 +51,7 @@ function setup() {
 }
 
 function draw() { 
-  scene1lines();
+  scene1lines();//see function below
   scene1(); //see function below
   if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
     scene1reversedir(); //see function below
@@ -68,7 +64,7 @@ function draw() {
     background(255, 0, 0); //clear background with red
     scene3(); //see function below
   }
-  if (rainy>2*height/3) { //if row of balls drops below 2/3 of screen
+  if (rainy>height) { //if row of balls drops below screen
     scene4(); //see function below
   }
   if (count >= 350) { //if countr is 350 (slightly less than the number of balls to be made)
@@ -94,12 +90,11 @@ function scene1reversedir() {
 function scene1lines(){
   stroke(255,0,0); //stroke settings
   strokeWeight(4);
-  change=int(random(-20,30)); //variable change set to random val
-  if(x_<=width){ //while within screen
-  line(x_,height,x_,y2); //make a line from bottom at random height
-   }
-  x_+=30; //move right by 30
-  y2+=change; //change height of line variable
+  for(i=width-15;i>=ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
+    line(i,height,i,y2);
+  
+  }
+    y2-=1; //incrememnt y2 to make lines come up the screen @ same rate the ball comes up the screen
 }
 
 function scene2() {
@@ -112,7 +107,7 @@ function scene3() {
   for (var i =0; i<=width; i++) { //make ellipses across top of screen
     ellipse(rainx*i, rainy, 15, 15);
   }
-  rainy+=15; //make ellipses fall
+  rainy+=10; //make ellipses fall
 }
 
 function scene4() {
@@ -133,9 +128,6 @@ function scene4() {
     balls[i].display();
   }
 }
-
-
-
 
 //class for Ball
 class Ball {
