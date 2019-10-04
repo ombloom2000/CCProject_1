@@ -4,6 +4,8 @@ var opacity;
 var ballx;
 var bally;
 var speed;
+var ymap;
+
 
 //second scene ball explode
 var diam;
@@ -25,11 +27,13 @@ function setup() {
 
   //variable instantiation
 	//scene 1
-  opacity = 0;
-  fill(0,0,0);
+    opacity = 0;
+    fill(0,0,0);
 	ballx=0;
 	bally=height;
 	speed=5;
+
+
 	
 	//scene 2
 	diam = 0;
@@ -37,6 +41,7 @@ function setup() {
 	//scene 3
 	rainx = 15;
 	rainy = 0;
+
 
 	//scene 4
 	balls = new Array(200); //make an array length 100
@@ -64,12 +69,17 @@ function draw() { //scene 1
 		background(255,0,0); //clear background with red //scene 3
 		for(var i =0; i<=width; i++){ //make ellipses across top of screen
 			ellipse(rainx*i,rainy,15,15);
+
 		}
 		rainy+=5; //make ellipses fall
 	}
 	if(rainy>2*height/3){ //if row of balls drops below 2/3 of screen
 		background(255); //clear background with white
-		balls[numballs] = new Ball(); //create a new Ball object at array position of numballs
+		//concept of making an array of objects is inspired by a lesson from Learning Processing by 
+		//Daniel Shiffman, but has been altered and rewritten in p5.js
+		//I followed his tutorial and made sure the objects worked independently on openProcessing live coding, then integrated them into this js sketch
+		//to work with the rest of my code
+		balls[numballs] = new Ball(); //create a new Ball object at array position of numballs 
 		numballs++; //increase numballs by 1
 			if(numballs>=balls.length){ //if number of balls is greater than the array length
 				numballs = 0; //set numballs to 0
@@ -78,6 +88,7 @@ function draw() { //scene 1
 			for(i = 0;i<numballs;i++){ //for each Ball object in the array //scene 4
 				balls[i].move(); //move and display the ball
 				balls[i].display();
+
 			}
 	}
 }
@@ -86,26 +97,32 @@ function draw() { //scene 1
 //class for Ball
 class Ball{
 	constructor(){ //constructor with variable instantiation
-		this.radius=8;
-		this.x = random(width);
-		this.y = this.radius*-4;
-		this.speed = random(1,5);
-		this.c = color(255,0,0);
+		this.diameter=15;
+		this.x = random(width); //random x position for each ball
+		this.y = 0; //starting y position of 0 for each ball
+		this.speed = random(1,6); //set each ball to a random speed btw 1 and 6
 	}
 	
 	move(){ //move method
-		this.y+=this.speed;
-		print("im moving");
+		this.y+=this.speed; //add random speed to y value of ball so it moves down
+		//print("im moving");
 	}
 	
 	
 	display(){ //display method
-		fill(255,0,0);
-		noStroke();
-		ellipse(this.x,this.y,this.radius*2,this.radius*2);
-		print("im displaying");
+		fill(255,0,0); //set ball color
+		noStroke(); //no stroke
+		ellipse(this.x,this.y,this.diameter,this.diameter); //make ellipse/ball at random x pos, y pos 0, and width and height of diameter
+		//print("im displaying");
 	}
 }
+
+/*	map(bknd, 0,255,height,0);
+	background(bknd);
+
+}*/
+
+
 
 
 
