@@ -40,7 +40,7 @@ function setup() {
   rainy = 0;
 
   //scene 4
-  balls = new Array(250); //make an array length 250
+  balls = new Array(400); //make an array length 400
   numballs = 0;
   count = 0;
 }
@@ -61,7 +61,7 @@ function draw() {
   if (rainy>2*height/3) { //if row of balls drops below 2/3 of screen
     scene4(); //see function below
   }
-  if (count >= 200) { //if countr is 200 (slights less than the number of balls to be made)
+  if (count >= 350) { //if countr is 350 (slightly less than the number of balls to be made)
     background(0); //clear background with black
   }
 }
@@ -120,12 +120,12 @@ class Ball {
   constructor() { //constructor with variable instantiation
     this.diameter=15;
     this.x = random(width); //random x position for each ball
-    this.y = 0; //starting y position of 0 for each ball
+    this.y = height; //starting y position of height/bottom of screen for each ball
     this.speed = random(1, 6); //set each ball to a random speed btw 1 and 6
   }
 
   move() { //move method
-    this.y+=this.speed; //add random speed to y value of ball so it moves down
+    this.y-=this.speed; //subtract random speed to y value of ball so it moves up
     //print("im moving");
   }
 
