@@ -22,6 +22,9 @@ var balls;
 var numballs;
 var count;
 
+//scene 5 grid
+var c;
+
 function setup() {
   //canvas, background, no stroke
   frameRate(70);
@@ -75,6 +78,7 @@ function draw() {
   }
   if (count >= 350) { //if counter is 350 (slightly less than the number of balls to be made)
     background(0); //clear background with black
+    scene5();
   }
 }
 
@@ -140,6 +144,18 @@ function scene4() {
   for (i = 0; i<numballs; i++) { //for each Ball object in the array //scene 4
     balls[i].move(); //move and display the ball
     balls[i].display();
+  }
+}
+
+function scene5(){
+  stroke(255);
+  strokeWeight(0.3);
+  for(i =10;i<=width-20;i+=20){ //create a grid of varying sizes of rectangles
+    c = color(random(255),random(10),0); //set a new fill of a random red/orange fir each column
+    for(j=10;j<=height;j+=20){
+    fill(c);
+    rect(i,j,random(70),random(70)); //random size rect
+    }
   }
 }
 
