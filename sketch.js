@@ -8,9 +8,8 @@ var speed;
 //scene 1 lines
 var y2;
 
-//second scene ball explode
+//second scene ball expand
 var diam;
-var opacity;
 var opadd;
 
 //scene 3 row of balls
@@ -42,8 +41,8 @@ function setup() {
   y2=height;
 
   //scene 2
-  diam = 700;
-  opadd = map(diam, 700,0,0,255); //map of diameter of circle to the opactity/alpha value
+  diam = 800;
+  opadd = map(diam, 800,0,6,255); //map of diameter of circle to the opactity/alpha value
 
   //scene 3
   rainx = 15;
@@ -65,6 +64,7 @@ function draw() {
     scene2(); //see scene 2 below
   }
   if(diam<=-windowWidth){ //if the circle's diameter is bigger than the window width
+    noStroke();
     background(255); //clear background
     bknd = map(rainy, 0,height,255,0); //set background to a shade of gray mapping to screen height
     background(bknd);
@@ -106,12 +106,14 @@ function scene1lines(){
 }
 
 function scene2() { //ADD COMMENTS
-  background(255); //clear background
-  fill(255,0,0,opadd);
-  ellipse(width/2,height/2, diam,diam);
-  diam -= 10;
-  //print(diam+" ");
-  opadd+=3;
+  fill(255,0,0,opadd); //fill with alpha that maps diam
+  stroke(255);
+  ellipse(700,400, diam,diam); //draw ellipse
+  diam -= 20; //decrease diameter
+  if(diam<= -windowWidth){ //clear screen if circle fills screen
+    background(255);
+  }
+  opadd+=0.3; //increase opacity
 }
 
 function scene3() {
