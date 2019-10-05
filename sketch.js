@@ -10,6 +10,8 @@ var y2;
 
 //second scene ball explode
 var diam;
+var opacity;
+var opadd;
 
 //scene 3 row of balls
 var rainx
@@ -23,6 +25,7 @@ var count;
 
 function setup() {
   //canvas, background, no stroke
+  frameRate(60);
   createCanvas(windowWidth,windowHeight);
   background(0); 
   noStroke();
@@ -39,7 +42,8 @@ function setup() {
   y2=height;
 
   //scene 2
-  diam = 0;
+  diam = 700;
+  opadd = map(diam, 700,0,0,255); //map of diameter of circle to the opactity/alpha value
 
   //scene 3
   rainx = 15;
@@ -60,18 +64,26 @@ function draw() {
   if (bally<= 0) { //if ball reaches top of screen
     scene2(); //see scene 2 below
   }
-  if (diam>=width) {//if ball fills screen
-    fill(255); //set fill to white
-    //background(255, 0, 0); //clear background with red
+  if(diam<=-windowWidth){
+    //diam = 50;
+    background(255);
     bknd = map(rainy, 0,height,0,255);
     background(bknd);
     scene3(); //see function below
-  }
+     }
+  //if (diam>=width) {//if ball fills screen
+    //fill(255); //set fill to white
+    ////background(255, 0, 0); //clear background with red
+    //bknd = map(rainy, 0,height,0,255);
+    //background(bknd);
+    //scene3(); //see function below
+  //}
   if (rainy>height) { //if row of balls drops below screen
     scene4(); //see function below
   }
   if (count >= 350) { //if counter is 350 (slightly less than the number of balls to be made)
-    background(255,0,0); //clear background with black
+    background(0); //clear background with black
+    circles();
   }
 }
 
@@ -101,9 +113,12 @@ function scene1lines(){
 }
 
 function scene2() {
-  background(0); //clear background
-  ellipse(width/2, height/2, diam, diam); //make an ellipse //scene 2
-  diam+=40; //expand ellipse
+  background(255); //clear background
+  fill(255,0,0,opadd);
+  ellipse(width/2,height/2, diam,diam);
+  diam -= 20;
+  //print(diam+" ");
+  opadd+=1;
 }
 
 function scene3() {
@@ -135,10 +150,10 @@ function scene4() {
 //class for Ball
 class Ball {
   constructor() { //constructor with variable instantiation
-    this.diameter=15;
+    this.diameter=random(5,35);
     this.x = random(width); //random x position for each ball
     this.y = height; //starting y position of height/bottom of screen for each ball
-    this.speed = random(1, 6); //set each ball to a random speed btw 1 and 6
+    this.speed = random(1, 20); //set each ball to a random speed btw 1 and 6
   }
 
   move() { //move method
@@ -160,7 +175,7 @@ class Ball {
 
 
 
-/*function circles(){
+function circles(){
  diam = 600;
  frameRate(rate);
  ellipse(width/2, width/2, diam,diam);
@@ -170,7 +185,7 @@ class Ball {
  if(diam >= 700){
  background(255);
  }
- }*/
+ }
 
 
 
