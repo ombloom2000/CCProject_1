@@ -55,6 +55,7 @@ function setup() {
   balls = new Array(400); //make an array length 400
   numballs = 0;
   count = 0; 
+
 }
 
 function draw() { 
@@ -78,7 +79,7 @@ function draw() {
   }
   if (count >= 350) { //if counter is 350 (slightly less than the number of balls to be made)
     background(0); //clear background with black
-    scene5();
+    scene5(width/2,height/2); //see function below, passing width and height of screen as random limits
   }
 }
 
@@ -147,16 +148,16 @@ function scene4() {
   }
 }
 
-function scene5(){
+function scene5(w,h){
   stroke(255);
   strokeWeight(0.3);
   for(i =10;i<=width-20;i+=20){ //create a grid of varying sizes of rectangles
     c = color(random(255),random(10),0); //set a new fill of a random red/orange fir each column
     for(j=10;j<=height;j+=20){
     fill(c);
-    rect(i,j,random(70),random(70)); //random size rect
+    rect(i,j,random(w),random(h)); //random size rect based on passed values
     }
-  }
+    }
 }
 
 //class for Ball
