@@ -14,6 +14,7 @@ var diam;
 //scene 3 row of balls
 var rainx
 var rainy;
+var bknd;
 
 //scene 4 rain of balls
 var balls;
@@ -22,8 +23,8 @@ var count;
 
 function setup() {
   //canvas, background, no stroke
-  createCanvas(800, 800);
-  background(255); 
+  createCanvas(windowWidth,windowHeight);
+  background(0); 
   noStroke();
 
   //variable instantiation
@@ -47,7 +48,7 @@ function setup() {
   //scene 4
   balls = new Array(400); //make an array length 400
   numballs = 0;
-  count = 0;
+  count = 0; 
 }
 
 function draw() { 
@@ -61,13 +62,15 @@ function draw() {
   }
   if (diam>=width) {//if ball fills screen
     fill(255); //set fill to white
-    background(255, 0, 0); //clear background with red
+    //background(255, 0, 0); //clear background with red
+    bknd = map(rainy, 0,height,0,255);
+    background(bknd);
     scene3(); //see function below
   }
   if (rainy>height) { //if row of balls drops below screen
     scene4(); //see function below
   }
-  if (count >= 350) { //if countr is 350 (slightly less than the number of balls to be made)
+  if (count >= 350) { //if counter is 350 (slightly less than the number of balls to be made)
     background(255,0,0); //clear background with black
   }
 }
@@ -98,7 +101,7 @@ function scene1lines(){
 }
 
 function scene2() {
-  background(255); //clear background
+  background(0); //clear background
   ellipse(width/2, height/2, diam, diam); //make an ellipse //scene 2
   diam+=40; //expand ellipse
 }
@@ -111,7 +114,7 @@ function scene3() {
 }
 
 function scene4() {
-  background(255); //clear background with white
+  background(0); //clear background with white
   //concept of making an array of objects is inspired by a lesson from Learning Processing by 
   //Daniel Shiffman, but has been altered and rewritten in p5.js
   //I followed his tutorial and made sure the objects worked independently on openProcessing live coding, then integrated them into this js sketch
@@ -152,17 +155,8 @@ class Ball {
   }
 }
 
-
-
-
-
-
-
-
-/*  map(bknd, 0,255,height,0);
- background(bknd);
  
- }*/
+ 
 
 
 
