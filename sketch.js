@@ -64,20 +64,12 @@ function draw() {
   if (bally<= 0) { //if ball reaches top of screen
     scene2(); //see scene 2 below
   }
-  if(diam<=-windowWidth){
-    //diam = 50;
-    background(255);
-    bknd = map(rainy, 0,height,255,0);
+  if(diam<=-windowWidth){ //if the circle's diameter is bigger than the window width
+    background(255); //clear background
+    bknd = map(rainy, 0,height,255,0); //set background to a shade of gray mapping to screen height
     background(bknd);
     scene3(); //see function below
      }
-  //if (diam>=width) {//if ball fills screen
-    //fill(255); //set fill to white
-    ////background(255, 0, 0); //clear background with red
-    //bknd = map(rainy, 0,height,0,255);
-    //background(bknd);
-    //scene3(); //see function below
-  //}
   if (rainy>height) { //if row of balls drops below screen
     scene4(); //see function below
   }
@@ -102,16 +94,18 @@ function scene1reversedir() {
 }
 
 function scene1lines(){
-  stroke(255,0,0); //stroke settings
+  //stroke(255,0,0); //stroke settings
   strokeWeight(4);
   for(i=width-15;i>=ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
+    var m = map(i,width-15,ballx,255,50); //map the i val from the position of the ball to the amount of red in the lines
+    stroke(m,0,0); //stroke settings
     line(i,height,i,y2);
   
   }
     y2-=2; //incrememnt y2 to make lines come up the screen @ same rate the ball comes up the screen
 }
 
-function scene2() {
+function scene2() { //ADD COMMENTS
   background(255); //clear background
   fill(255,0,0,opadd);
   ellipse(width/2,height/2, diam,diam);
@@ -123,7 +117,7 @@ function scene2() {
 function scene3() {
   fill(255,0,0);
   for (var i =0; i<=width; i++) { //make ellipses across top of screen
-    ellipse(rainx*i, rainy, 15, 15);
+    ellipse(rainx*i, rainy, 15, 15*i/2);
   }
   rainy+=8; //make ellipses fall
 }
