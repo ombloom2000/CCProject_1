@@ -25,7 +25,7 @@ var count;
 
 function setup() {
   //canvas, background, no stroke
-  frameRate(60);
+  frameRate(70);
   createCanvas(windowWidth,windowHeight);
   background(0); 
   noStroke();
@@ -67,7 +67,7 @@ function draw() {
   if(diam<=-windowWidth){
     //diam = 50;
     background(255);
-    bknd = map(rainy, 0,height,0,255);
+    bknd = map(rainy, 0,height,255,0);
     background(bknd);
     scene3(); //see function below
      }
@@ -83,7 +83,6 @@ function draw() {
   }
   if (count >= 350) { //if counter is 350 (slightly less than the number of balls to be made)
     background(0); //clear background with black
-    circles();
   }
 }
 
@@ -92,10 +91,10 @@ function scene1() {
   noStroke();
   fill(255, 0, 0, opacity); //set fill
   ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
-  speed = speed + 1; //increase speed
-  opacity+=0.3; //increase opacity
+  speed = speed + 2; //increase speed
+  opacity+=0.8; //increase opacity
   ballx+=speed; //move ballx
-  bally-=1; //move bally
+  bally-=2; //move bally
 }
 
 function scene1reversedir() { 
@@ -109,23 +108,24 @@ function scene1lines(){
     line(i,height,i,y2);
   
   }
-    y2-=1; //incrememnt y2 to make lines come up the screen @ same rate the ball comes up the screen
+    y2-=2; //incrememnt y2 to make lines come up the screen @ same rate the ball comes up the screen
 }
 
 function scene2() {
   background(255); //clear background
   fill(255,0,0,opadd);
   ellipse(width/2,height/2, diam,diam);
-  diam -= 20;
+  diam -= 10;
   //print(diam+" ");
-  opadd+=1;
+  opadd+=3;
 }
 
 function scene3() {
+  fill(255,0,0);
   for (var i =0; i<=width; i++) { //make ellipses across top of screen
     ellipse(rainx*i, rainy, 15, 15);
   }
-  rainy+=10; //make ellipses fall
+  rainy+=8; //make ellipses fall
 }
 
 function scene4() {
@@ -163,7 +163,7 @@ class Ball {
 
 
   display() { //display method
-    fill(255, 0, 0); //set ball color
+    fill(random(255), 0, 0); //set ball color to orangey red variation
     noStroke(); //no stroke
     ellipse(this.x, this.y, this.diameter, this.diameter); //make ellipse/ball at random x pos, y pos 0, and width and height of diameter
     //print("im displaying");
@@ -171,21 +171,6 @@ class Ball {
 }
 
  
- 
-
-
-
-function circles(){
- diam = 600;
- frameRate(rate);
- ellipse(width/2, width/2, diam,diam);
- diam -= 40;
- rate+=0.25;
- opacity+=40;
- if(diam >= 700){
- background(255);
- }
- }
 
 
 
