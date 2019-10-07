@@ -61,12 +61,15 @@ function setup() {
 }
 
 function draw() { 
-  if(timeStarted>0 && timeStarted <8000){
-  scene1lines();//see function below
+  switch (timeStarted){ //here, I tried to use millis and switch based on when millis() starts, and get can't that to work 
+    case timeStarted>0:
+      scene1();
+      scene1lines();
+    break;
+  }
+  /*scene1lines();//see function below
   scene1(); //see function below
-}
-print(timeStarted + " "); //here is where the timing method stops working for me
-  if (timeStarted>8000 && timeStarted<11000) { 
+  if (bally<= 0) { //if ball reaches top of screen
    scene2(); //see scene 2 below
   }
   if(diam<=-windowWidth){ //if the circle's diameter is bigger than the window width
@@ -82,7 +85,7 @@ print(timeStarted + " "); //here is where the timing method stops working for me
   if (count >= 350) { //if counter is 350 (slightly less than the number of balls to be made)
     background(0); //clear background with black
     scene5(width/2,height/2); //see function below, passing width and height of screen as random limits
-  }
+  }*/
 }
 
 
