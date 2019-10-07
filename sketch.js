@@ -1,9 +1,9 @@
 //variable declaration
 //for first scene ball bounce
-var opacity;
+/*var opacity;
 var ballx;
 var bally;
-var speed;
+var speed;*/
 
 //scene 1 lines
 var y2;
@@ -34,11 +34,11 @@ function setup() {
 
   //variable instantiation
   //scene 1
-  opacity = 0;
+  /*opacity = 0;
   fill(0, 0, 0);
   ballx=0;
   bally=height;
-  speed=5;
+  speed=5;*/
 
   //scene 1 lines
   y2=height;
@@ -59,14 +59,11 @@ function setup() {
 }
 
 function draw() { 
-  scene1lines();//see function below
-  scene1(); //see function below
-  if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
-    scene1reversedir(); //see function below
-  }
-  if (bally<= 0) { //if ball reaches top of screen
-    scene2(); //see scene 2 below
-  }
+  //scene1lines();//see function below
+  scene1(0,0,height,5); //see function below
+  //if (bally<= 0) { //if ball reaches top of screen
+  //  scene2(); //see scene 2 below
+  //}
   if(diam<=-windowWidth){ //if the circle's diameter is bigger than the window width
     noStroke();
     background(255); //clear background
@@ -84,7 +81,7 @@ function draw() {
 }
 
 
-function scene1() {
+function scene1(opacity,ballx,bally,speed) { //can't get function to run now that variables are local
   noStroke();
   fill(255, 0, 0, opacity); //set fill
   ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
@@ -92,13 +89,23 @@ function scene1() {
   opacity+=0.8; //increase opacity
   ballx+=speed; //move ballx
   bally-=2; //move bally
+  if(ballx>=width || ballx<=0){
+    speed = speed * -1;
+  }
 }
 
-function scene1reversedir() { 
-  speed=speed*-1; //reverse direction of speed variable
-}
+/*function scene1() {
+  noStroke();
+  fill(255, 0, 0, opacity); //set fill
+  ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
+  speed = speed + 2; //increase speed
+  opacity+=0.8; //increase opacity
+  ballx+=speed; //move ballx
+  bally-=2; //move bally
+}*/
 
-function scene1lines(){
+//commenting this out bc it uses a variable from when scene 1 was global, want to get scene 1 to work locally first
+/*function scene1lines(){
   //stroke(255,0,0); //stroke settings
   strokeWeight(4);
   for(i=width-15;i>=ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
@@ -108,7 +115,7 @@ function scene1lines(){
   
   }
     y2-=2; //incrememnt y2 to make lines come up the screen @ same rate the ball comes up the screen
-}
+}*/
 
 function scene2() { //ADD COMMENTS
   fill(255,0,0,opadd); //fill with alpha that maps diam
