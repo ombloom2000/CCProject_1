@@ -61,12 +61,23 @@ function setup() {
 }
 
 function draw() { 
-  switch (timeStarted){ //here, I tried to use millis and switch based on when millis() starts, and get can't that to work 
+  /*switch (timeStarted){ //here, I tried to use millis and switch based on when millis() starts, and get can't that to work 
     case timeStarted>0:
       scene1();
       scene1lines();
     break;
+  }*/
+
+  switch (true){ //here, I tried to use millis and switch another way with a boolean
+    case timeStarted>0 && timeStarted<8500:
+      scene1();
+      scene1lines();
+    break;
+    case timeStarted>8500 && timeStarted<11000:
+      scene2();
+      break;
   }
+
   /*scene1lines();//see function below
   scene1(); //see function below
   if (bally<= 0) { //if ball reaches top of screen
