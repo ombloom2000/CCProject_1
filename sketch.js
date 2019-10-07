@@ -115,12 +115,16 @@ function draw() {
 
 function scene1() {
   noStroke();
-  fill(255, 0, 0, opacity); //set fill
+  //fill(255, 0, 0, opacity); //set fill
   ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
   speed = speed + 2; //increase speed
   opacity+=0.8; //increase opacity
   ballx+=speed; //move ballx
   bally-=2; //move bally
+  for(i = 0; i<width;i++){
+    ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally //tried to turn this into a for loop, opacity doesn't change for some reason
+    fill(255, 0, 0, opacity); //set fill
+  }
   if(ballx>=width || ballx<=0){
     speed = speed * -1;
   }
