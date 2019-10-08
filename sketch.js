@@ -1,5 +1,4 @@
 //variable declaration
-var timeStarted;
 //for first scene ball bounce
 var opacity;
 var ballx;
@@ -34,7 +33,6 @@ function setup() {
   noStroke();
 
   //variable instantiation
-  timeStarted = millis(); //time started is how long the program has been running
   //scene 1
   opacity = 0;
   fill(0, 0, 0);
@@ -61,27 +59,13 @@ function setup() {
 }
 
 function draw() { 
-  /*switch (timeStarted){ //here, I tried to use millis and switch based on when millis() starts, and get can't that to work 
-    case timeStarted>0:
-      scene1();
-      scene1lines();
-    break;
-  }*/
-
-  switch (true){ //here, I tried to use millis and switch another way with a boolean
-    case timeStarted>0 && timeStarted<8500:
-      scene1();
-      scene1lines();
-    break;
-    case timeStarted>8500 && timeStarted<11000:
-      scene2();
-      break;
-  }
-
-  /*scene1lines();//see function below
+  scene1lines();//see function below
   scene1(); //see function below
+  if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
+    scene1reversedir(); //see function below
+  }
   if (bally<= 0) { //if ball reaches top of screen
-   scene2(); //see scene 2 below
+    scene2(); //see scene 2 below
   }
   if(diam<=-windowWidth){ //if the circle's diameter is bigger than the window width
     noStroke();
@@ -96,11 +80,11 @@ function draw() {
   if (count >= 350) { //if counter is 350 (slightly less than the number of balls to be made)
     background(0); //clear background with black
     scene5(width/2,height/2); //see function below, passing width and height of screen as random limits
-  }*/
+  }
 }
 
 
-/*function scene1(opacity,ballx,bally,speed) { //can't get function to run now that variables are local
+function scene1() {
   noStroke();
   fill(255, 0, 0, opacity); //set fill
   ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
@@ -108,26 +92,10 @@ function draw() {
   opacity+=0.8; //increase opacity
   ballx+=speed; //move ballx
   bally-=2; //move bally
-  if(ballx>=width || ballx<=0){
-    speed = speed * -1;
-  }
-}*/
+}
 
-function scene1() {
-  noStroke();
-  //fill(255, 0, 0, opacity); //set fill
-  ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
-  speed = speed + 2; //increase speed
-  opacity+=0.8; //increase opacity
-  ballx+=speed; //move ballx
-  bally-=2; //move bally
-  for(i = 0; i<width;i++){
-    ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally //tried to turn this into a for loop, opacity doesn't change for some reason
-    fill(255, 0, 0, opacity); //set fill
-  }
-  if(ballx>=width || ballx<=0){
-    speed = speed * -1;
-  }
+function scene1reversedir() { 
+  speed=speed*-1; //reverse direction of speed variable
 }
 
 function scene1lines(){
@@ -142,7 +110,7 @@ function scene1lines(){
     y2-=2; //incrememnt y2 to make lines come up the screen @ same rate the ball comes up the screen
 }
 
-function scene2() { 
+function scene2() { //ADD COMMENTS
   fill(255,0,0,opadd); //fill with alpha that maps diam
   stroke(255);
   ellipse(700,400, diam,diam); //draw ellipse
@@ -214,22 +182,3 @@ class Ball {
     //print("im displaying");
   }
 }
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
