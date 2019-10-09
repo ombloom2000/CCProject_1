@@ -1,9 +1,9 @@
 //variable declaration
 
 //scene 1
-var wallball;
-var wallball2;
-var wallball3;
+//var wallball;
+//var wallball2;
+var wallballs;
 
 //second scene ball expand
 var diam;
@@ -30,12 +30,12 @@ function setup() {
   //variable instantiation
 
   //scene 1
-  wallball = new WallBall(0,0,height,5, 1);
-  wallball2 = new WallBall(5,70,height,10, 2);
-  /*opacity = 0;
-  ballx=0;
-  bally=height;
-  speed=5;*/
+  //wallball = new WallBall(0,0,height,5, 1);
+  //wallball2 = new WallBall(5,70,height,10, 2);
+  wallballs = new Array(3); //array of wall balls length 3
+  for(i=0;i<wallballs.length;i++){
+    wallballs[i] = new WallBall(0,i,height,random(1,7),random(0.5,1)); //fill array with WallBall objects
+  }
 
   //scene 2
   diam = 800;
@@ -55,48 +55,52 @@ function setup() {
 }
 
 function draw() {
-  if (millis()<7500){
+  if (millis()<7500){ //within time range
     background(0);
     scene1();
   }
-  if (millis()>7500 && millis()<9000) { //if 
-    //timeofLastSwitch = currentTime;
+  if (millis()>7500 && millis()<9000) { //within time range
     background(0);
-    scene2(); //see scene 2 below
+    scene2(); 
   }
-  if(millis()>9000 && millis()<10000){ //if the circle's diameter is bigger than the window width
+  if(millis()>9000 && millis()<10000){ //within time range
     noStroke();
-    background(255); //clear background
+    background(255); 
     bknd = map(rainy, 0,height,255,0); //set background to a shade of gray mapping to screen height
     background(bknd);
-    scene3(); //see function below
+    scene3();
      }
-  if (millis()>10000 && millis()<14000) { //if row of balls drops below screen
+  if (millis()>10000 && millis()<14000) { //within time range
     scene4(); //see function below
   }
-  if (millis()>14000 && millis()<17000) { //if counter is 350 (slightly less than the number of balls to be made)
-    background(0); //clear background with black
-    scene5(width/2,height/2); //see function below, passing width and height of screen as random limits
+  if (millis()>14000 && millis()<17000) { //within time range
+    background(0); 
+    scene5(width/2,height/2); //passing width and height of screen as random limits
   }
-  if(millis()>17000){
+  if(millis()>17000){//within time range
     background(175,0,0);
   }
 }
 
 
 function scene1() {
-  wallball.move();
-  wallball.show();
-  wallball2.move();
-  wallball2.show();
+  //wallball.move();
+  //wallball.show();
+  //wallball2.move();
+  //wallball2.show();
+  for (i = 0; i<wallballs.length; i++) { //for each WallBall object in the array
+    wallballs[i].move(); //move and display the ball
+    wallballs[i].show(); 
+  }
 }
+
 
 function scene2() { 
   fill(255,0,0,opadd); //fill with alpha that maps diam
   stroke(255);
   ellipse(700,400, diam,diam); //draw ellipse
   diam -= 20; //decrease diameter
-  if(diam<= -windowWidth){ //clear screen if circle fills screen
+  if(diam <= -windowWidth){ //clear screen if circle fills screen
     background(255);
   }
   opadd+=0.3; //increase opacity
@@ -134,7 +138,7 @@ function scene5(w,h){
 
 //class for WallBall scene 1
 class WallBall{
-  constructor(opacity, ballx, bally, speed, diameter){
+  constructor(opacity, ballx, bally, speed, diameter){ //constrctor and instantiation
     this.opacity = opacity;
     this.ballx = ballx;
     this.bally = bally;
@@ -144,7 +148,7 @@ class WallBall{
   }
 
   move(){
-   this.diameter+=0.12;
+   this.diameter+=0.12; //increase diameter
    this.speed+=2; //increase speed
    this.opacity+=0.8; //increase opacity
    this.ballx+=this.speed; //move ballx
@@ -157,12 +161,12 @@ class WallBall{
   show(){
    noStroke();
    fill(random(50,255), 0,0,this.opacity); //set fill to random red/orange
-   ellipse(this.ballx, this.bally,this.diameter , this.diameter); //make an ellipse at ballx, bally
+   ellipse(this.ballx,this.bally,this.diameter,this.diameter); //make an ellipse at ballx,bally with passed params
    strokeWeight(4);
    for(i=width-15;i>=this.ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
     var m = map(i,width-15,this.ballx,255,50); //map the i val from the position of the ball to the amount of red in the lines
     stroke(m,0,0); //stroke settings
-    line(i,height,i,this.bally);
+    line(i,height,i,this.bally); //make the actual lines
   }
   }
 }
