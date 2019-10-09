@@ -17,8 +17,6 @@ var bknd;
 
 //scene 4 rain of balls
 var balls;
-var numballs;
-var count;
 
 //scene 5 grid
 var c;
@@ -47,9 +45,11 @@ function setup() {
   rainy = 0;
 
   //scene 4
-  balls = new Array(400); //make an array length 400
-  numballs = 0;
-  count = 0; 
+  balls = new Array(800); //array length 400
+
+  for(i=0;i<balls.length;i++){
+   balls[i] = new Ball(); //make objects to fill array
+  }
 
 }
 
@@ -86,7 +86,6 @@ function scene1() {
   noStroke();
   fill(255, 0, 0, opacity); //set fill
   ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
-
   speed+=2; //increase speed
   opacity+=0.8; //increase opacity
   ballx+=speed; //move ballx
@@ -123,22 +122,13 @@ function scene3() {
   rainy+=15; //make ellipses fall
 }
 
-function scene4() {
-  background(0); //clear background with white
-  //concept of making an array of objects is inspired by a lesson from Learning Processing by 
+//concept of making an array of objects is inspired by a lesson from Learning Processing by 
   //Daniel Shiffman, but has been altered and rewritten in p5.js
-  //I followed his tutorial and made sure the objects worked independently on openProcessing live coding, then integrated them into this js sketch
-  //to work with the rest of my code
-  balls[numballs] = new Ball(); //create a new Ball object at array position of numballs 
-  numballs++; //increase numballs by 1
-  count++; //increase count each time a new ball is made
-  if (numballs>=balls.length) { //if number of balls is greater than the array length
-    numballs = 0; //set numballs to 0
-  }
-
-  for (i = 0; i<numballs; i++) { //for each Ball object in the array //scene 4
+function scene4() {
+  background(0); //clear background
+  for (i = 0; i<balls.length; i++) { //for each Ball object in the array
     balls[i].move(); //move and display the ball
-    balls[i].display();
+    balls[i].show(); 
   }
 }
 
@@ -151,28 +141,26 @@ function scene5(w,h){
     fill(c);
     rect(i,j,random(w),random(h)); //random size rect based on passed values
     }
-    }
+  }
 }
 
-//class for Ball
+ 
+//class for Ball scene 4
 class Ball {
   constructor() { //constructor with variable instantiation
     this.diameter=random(5,35);
     this.x = random(width); //random x position for each ball
     this.y = height; //starting y position of height/bottom of screen for each ball
-    this.speed = random(1, 20); //set each ball to a random speed btw 1 and 6
+    this.speed = random(1, 10); //set each ball to a random speed btw 1 and 6
   }
 
   move() { //move method
     this.y-=this.speed; //subtract random speed to y value of ball so it moves up
-    //print("im moving");
   }
 
-
-  display() { //display method
+  show() { //display method
     fill(random(255), 0, 0); //set ball color to orangey red variation
     noStroke(); //no stroke
     ellipse(this.x, this.y, this.diameter, this.diameter); //make ellipse/ball at random x pos, y pos 0, and width and height of diameter
-    //print("im displaying");
   }
 }
