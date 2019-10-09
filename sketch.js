@@ -1,10 +1,10 @@
 //variable declaration
 
 //for first scene ball bounce
-/*var opacity;
+var opacity;
 var ballx;
 var bally;
-var speed;*/
+var speed;
 
 //second scene ball expand
 var diam;
@@ -33,10 +33,10 @@ function setup() {
   //variable instantiation
 
   //scene 1
-  /*opacity = 0;
+  opacity = 0;
   ballx=0;
   bally=height;
-  speed=5;*/
+  speed=5;
 
   //scene 2
   diam = 800;
@@ -54,72 +54,46 @@ function setup() {
 }
 
 function draw() {
-  /*
-  if(millis()<7500){
-    scene1(0,0,height,5); //see function below
-    print("running scene1");
-  }*/
-
-  var init_opacity = 0;
-  var init_ballx = 0;
-  var init_bally = height;
-  var init_speed = 5;
-
   if (millis()<7500){
-    scene1(init_opacity, init_ballx, init_bally, init_speed);
-    init_speed+=2; //increase speed
-    init_opacity+=0.8; //increase opacity
-    init_ballx+=init_speed; //move ballx
-    init_bally-=2; //move bally
-
+    scene1();
   }
-  if (millis()>7500) { //if 
+  if (millis()>7500 && millis()<9000) { //if 
     //timeofLastSwitch = currentTime;
     background(0);
     scene2(); //see scene 2 below
   }
-  if(millis()>9000){ //if the circle's diameter is bigger than the window width
+  if(millis()>9000 && millis()<10000){ //if the circle's diameter is bigger than the window width
     noStroke();
     background(255); //clear background
     bknd = map(rainy, 0,height,255,0); //set background to a shade of gray mapping to screen height
     background(bknd);
     scene3(); //see function below
      }
-  if (millis()>10000) { //if row of balls drops below screen
+  if (millis()>10000 && millis()<14000) { //if row of balls drops below screen
     scene4(); //see function below
   }
-  if (millis()>14000) { //if counter is 350 (slightly less than the number of balls to be made)
+  if (millis()>14000 && millis()<17000) { //if counter is 350 (slightly less than the number of balls to be made)
     background(0); //clear background with black
     scene5(width/2,height/2); //see function below, passing width and height of screen as random limits
+  }
+  if(millis()>17000){
+    background(175,0,0);
   }
 }
 
 
-/*function scene1_HELPER(init_opacity, init_ballx, init_bally, init_speed) {
-  scene1(init_opacity, init_ballx, init_bally, init_speed); //see function below
-    init_speed+=2; //increase speed
-    init_opacity+=0.8; //increase opacity
-    init_ballx+=init_speed; //move ballx
-    init_bally-=2; //move bally
-
-    if (init_ballx >= width || init_ballx<=0) { //reverse direction if ball goes out of bounds
-      init_speed=init_speed*-1; //reverse direction of speed variable
-    }
-}*/
-
-
-function scene1(opacity, ballx, bally, speed) {
+function scene1() {
   noStroke();
   fill(255, 0, 0, opacity); //set fill
   ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
-  /*
+
   speed+=2; //increase speed
   opacity+=0.8; //increase opacity
   ballx+=speed; //move ballx
   bally-=2; //move bally
   if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
     speed=speed*-1; //reverse direction of speed variable
-  }*/
+  }
 
   strokeWeight(4);
   for(i=width-15;i>=ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
@@ -130,7 +104,7 @@ function scene1(opacity, ballx, bally, speed) {
 
 }
 
-function scene2() { //ADD COMMENTS
+function scene2() { 
   fill(255,0,0,opadd); //fill with alpha that maps diam
   stroke(255);
   ellipse(700,400, diam,diam); //draw ellipse
