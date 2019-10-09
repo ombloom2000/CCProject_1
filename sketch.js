@@ -1,10 +1,10 @@
 //variable declaration
 
 //for first scene ball bounce
-var opacity;
+/*var opacity;
 var ballx;
 var bally;
-var speed;
+var speed;*/
 
 //second scene ball expand
 var diam;
@@ -33,11 +33,10 @@ function setup() {
   //variable instantiation
 
   //scene 1
-  opacity = 0;
-  fill(0, 0, 0);
+  /*opacity = 0;
   ballx=0;
   bally=height;
-  speed=5;
+  speed=5;*/
 
   //scene 2
   diam = 800;
@@ -54,9 +53,25 @@ function setup() {
 
 }
 
-function draw() { 
+function draw() {
+  /*
   if(millis()<7500){
-  scene1(); //see function below
+    scene1(0,0,height,5); //see function below
+    print("running scene1");
+  }*/
+
+  var init_opacity = 0;
+  var init_ballx = 0;
+  var init_bally = height;
+  var init_speed = 5;
+
+  if (millis()<7500){
+    scene1(init_opacity, init_ballx, init_bally, init_speed);
+    init_speed+=2; //increase speed
+    init_opacity+=0.8; //increase opacity
+    init_ballx+=init_speed; //move ballx
+    init_bally-=2; //move bally
+
   }
   if (millis()>7500) { //if 
     //timeofLastSwitch = currentTime;
@@ -80,24 +95,37 @@ function draw() {
 }
 
 
-function scene1() {
+/*function scene1_HELPER(init_opacity, init_ballx, init_bally, init_speed) {
+  scene1(init_opacity, init_ballx, init_bally, init_speed); //see function below
+    init_speed+=2; //increase speed
+    init_opacity+=0.8; //increase opacity
+    init_ballx+=init_speed; //move ballx
+    init_bally-=2; //move bally
+
+    if (init_ballx >= width || init_ballx<=0) { //reverse direction if ball goes out of bounds
+      init_speed=init_speed*-1; //reverse direction of speed variable
+    }
+}*/
+
+
+function scene1(opacity, ballx, bally, speed) {
   noStroke();
   fill(255, 0, 0, opacity); //set fill
   ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
-  speed = speed + 2; //increase speed
+  /*
+  speed+=2; //increase speed
   opacity+=0.8; //increase opacity
   ballx+=speed; //move ballx
   bally-=2; //move bally
   if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
     speed=speed*-1; //reverse direction of speed variable
-  }
+  }*/
 
   strokeWeight(4);
   for(i=width-15;i>=ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
     var m = map(i,width-15,ballx,255,50); //map the i val from the position of the ball to the amount of red in the lines
     stroke(m,0,0); //stroke settings
     line(i,height,i,bally);
-  
   }
 
 }
