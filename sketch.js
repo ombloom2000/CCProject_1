@@ -4,8 +4,8 @@
 var wallballs;
 
 //second scene ball expand
-var diam;
-var opadd;
+//var concentric;
+var concentrics;
 
 //scene 3 row of balls
 var rainx
@@ -18,15 +18,14 @@ var balls;
 //scene 5 grid
 var c;
 
+//SETUP
 function setup() {
   //canvas, background, no stroke
   frameRate(70);
   createCanvas(windowWidth,windowHeight);
   background(0); 
   noStroke();
-
   //variable instantiation
-
   //scene 1
   wallballs = []; //array of wall balls
   for(i=0;i<10;i++){ //making an array of 10 objects
@@ -38,8 +37,13 @@ function setup() {
   }
 
   //scene 2
-  diam = 800;
-  opadd = map(diam, 800,0,20,255); //map of diameter of circle to the opactity/alpha value
+  concentrics = [];
+  for(i=0;i<5;i++){
+    var d_ = random(200,800);
+    var x_ = 100+300*i;
+    var y_ = random(height);
+    concentrics[i] = new Concentric(d_, x_, y_);
+  }
 
   //scene 3
   rainx = 15;
@@ -54,9 +58,9 @@ function setup() {
 
 }
 
+//DRAW
 function draw() {
   if (millis()<7500){ //within time range
-    //background(0);
     scene1();
   }
   if (millis()>7500 && millis()<9000) { //within time range
@@ -92,14 +96,11 @@ function scene1() {
 
 
 function scene2() { 
-  fill(255,0,0,opadd); //fill with alpha that maps diam
-  stroke(255);
-  ellipse(700,400, diam,diam); //draw ellipse
-  diam -= 20; //decrease diameter
-  if(diam <= -windowWidth){ //clear screen if circle fills screen
-    background(255);
+  for(i=0;i<concentrics.length;i++){
+    concentrics[i].move();
+    concentrics[i].show();
   }
-  opadd+=0.3; //increase opacity
+
 }
 
 function scene3() {
@@ -145,7 +146,7 @@ class WallBall{
   }
 
   move(){
-   this.diameter+=0.095; //increase diameter
+   this.diameter+=0.095; //increase diameter by diff random amount 
    this.speed+=2; //increase speed
    this.opacity+=0.8; //increase opacity
    this.ballx+=this.speed; //move ballx
@@ -159,13 +160,30 @@ class WallBall{
    noStroke();
    fill(random(100,255), 0,0,this.opacity); //set fill to a various red-orange with given opacity
    ellipse(this.ballx,this.bally,this.diameter,this.diameter); //make an ellipse at ballx,bally with passed params
-   strokeWeight(4);
+  }
+}
+
+//class for Concentric scene 2
+class Concentric{
+  constructor(diam,x,y){
+    this.diam = diam;
+    this.x = x;
+    this.y = y;
+    this.opadd = map(this.diam, this.diam,0,20,255); //map of diameter of circle to the opactity/alpha value;
+  }
+  move(){
+   this.diam-=random(10,30); //decrease diameter by a random amount
+   this.opadd+=0.3; //increase opacity
+  }
+
+  show(){
+   fill(random(80,255),0,0,this.opadd); //fill with red orange and alpha that maps diam
+   stroke(255);
+   ellipse(this.x,this.y, this.diam,this.diam); //draw ellipse with passed parameters
+   strokeWeight(random(1,4));
   }
 }
  
-
-
-
 //class for Ball scene 4
 class Ball {
   constructor() { //constructor with variable instantiation
