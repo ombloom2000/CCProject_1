@@ -1,8 +1,6 @@
 //variable declaration
 
 //scene 1
-//var wallball;
-//var wallball2;
 var wallballs;
 
 //second scene ball expand
@@ -30,11 +28,13 @@ function setup() {
   //variable instantiation
 
   //scene 1
-  //wallball = new WallBall(0,0,height,5, 1);
-  //wallball2 = new WallBall(5,70,height,10, 2);
-  wallballs = new Array(3); //array of wall balls length 3
-  for(i=0;i<wallballs.length;i++){
-    wallballs[i] = new WallBall(0,i,height,random(1,7),random(0.5,1)); //fill array with WallBall objects
+  wallballs = []; //array of wall balls
+  for(i=0;i<10;i++){ //making an array of 10 objects
+    var x_ = 0+160*i; //starting x changes with each new object
+    var s_ = random(1,7); //starting speed changes with each new object
+    var h_ = random(1,100); //starting height changes with each new object
+    var d_ = random(0.5,10);//starting diametr changes with each new object
+    wallballs[i] = new WallBall(0,x_,height-h_,s_,d_); //at each array location, make a new ball object will varying paramenters
   }
 
   //scene 2
@@ -56,11 +56,11 @@ function setup() {
 
 function draw() {
   if (millis()<7500){ //within time range
-    background(0);
+    //background(0);
     scene1();
   }
   if (millis()>7500 && millis()<9000) { //within time range
-    background(0);
+    //background(0);
     scene2(); 
   }
   if(millis()>9000 && millis()<10000){ //within time range
@@ -84,10 +84,6 @@ function draw() {
 
 
 function scene1() {
-  //wallball.move();
-  //wallball.show();
-  //wallball2.move();
-  //wallball2.show();
   for (i = 0; i<wallballs.length; i++) { //for each WallBall object in the array
     wallballs[i].move(); //move and display the ball
     wallballs[i].show(); 
@@ -139,6 +135,7 @@ function scene5(w,h){
 //class for WallBall scene 1
 class WallBall{
   constructor(opacity, ballx, bally, speed, diameter){ //constrctor and instantiation
+    constrain(this.diameter, 0,40); //constraining diam of each ball
     this.opacity = opacity;
     this.ballx = ballx;
     this.bally = bally;
@@ -148,7 +145,7 @@ class WallBall{
   }
 
   move(){
-   this.diameter+=0.12; //increase diameter
+   this.diameter+=0.095; //increase diameter
    this.speed+=2; //increase speed
    this.opacity+=0.8; //increase opacity
    this.ballx+=this.speed; //move ballx
@@ -160,14 +157,9 @@ class WallBall{
 
   show(){
    noStroke();
-   fill(random(50,255), 0,0,this.opacity); //set fill to random red/orange
+   fill(random(100,255), 0,0,this.opacity); //set fill to a various red-orange with given opacity
    ellipse(this.ballx,this.bally,this.diameter,this.diameter); //make an ellipse at ballx,bally with passed params
    strokeWeight(4);
-   for(i=width-15;i>=this.ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
-    var m = map(i,width-15,this.ballx,255,50); //map the i val from the position of the ball to the amount of red in the lines
-    stroke(m,0,0); //stroke settings
-    line(i,height,i,this.bally); //make the actual lines
-  }
   }
 }
  
