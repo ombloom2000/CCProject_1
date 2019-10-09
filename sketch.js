@@ -1,10 +1,9 @@
 //variable declaration
 
-//for first scene ball bounce
-var opacity;
-var ballx;
-var bally;
-var speed;
+//scene 1
+var wallball;
+var wallball2;
+var wallball3;
 
 //second scene ball expand
 var diam;
@@ -31,10 +30,12 @@ function setup() {
   //variable instantiation
 
   //scene 1
-  opacity = 0;
+  wallball = new WallBall(0,0,height,5, 1);
+  wallball2 = new WallBall(5,70,height,10, 2);
+  /*opacity = 0;
   ballx=0;
   bally=height;
-  speed=5;
+  speed=5;*/
 
   //scene 2
   diam = 800;
@@ -55,6 +56,7 @@ function setup() {
 
 function draw() {
   if (millis()<7500){
+    background(0);
     scene1();
   }
   if (millis()>7500 && millis()<9000) { //if 
@@ -83,24 +85,10 @@ function draw() {
 
 
 function scene1() {
-  noStroke();
-  fill(255, 0, 0, opacity); //set fill
-  ellipse(ballx, bally, 20, 20); //make an ellipse at ballx, bally
-  speed+=2; //increase speed
-  opacity+=0.8; //increase opacity
-  ballx+=speed; //move ballx
-  bally-=2; //move bally
-  if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
-    speed=speed*-1; //reverse direction of speed variable
-  }
-
-  strokeWeight(4);
-  for(i=width-15;i>=ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
-    var m = map(i,width-15,ballx,255,50); //map the i val from the position of the ball to the amount of red in the lines
-    stroke(m,0,0); //stroke settings
-    line(i,height,i,bally);
-  }
-
+  wallball.move();
+  wallball.show();
+  wallball2.move();
+  wallball2.show();
 }
 
 function scene2() { 
@@ -144,7 +132,44 @@ function scene5(w,h){
   }
 }
 
+//class for WallBall scene 1
+class WallBall{
+  constructor(opacity, ballx, bally, speed, diameter){
+    this.opacity = opacity;
+    this.ballx = ballx;
+    this.bally = bally;
+    this.speed = speed;
+    this.diameter = diameter;
+
+  }
+
+  move(){
+   this.diameter+=0.12;
+   this.speed+=2; //increase speed
+   this.opacity+=0.8; //increase opacity
+   this.ballx+=this.speed; //move ballx
+   this.bally-=2; //move bally
+   if (this.ballx >= width || this.ballx<=0) { //reverse direction if ball goes out of bounds
+    this.speed=this.speed*-1; //reverse direction of speed variable
+  }
+  }
+
+  show(){
+   noStroke();
+   fill(random(50,255), 0,0,this.opacity); //set fill to random red/orange
+   ellipse(this.ballx, this.bally,this.diameter , this.diameter); //make an ellipse at ballx, bally
+   strokeWeight(4);
+   for(i=width-15;i>=this.ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
+    var m = map(i,width-15,this.ballx,255,50); //map the i val from the position of the ball to the amount of red in the lines
+    stroke(m,0,0); //stroke settings
+    line(i,height,i,this.bally);
+  }
+  }
+}
  
+
+
+
 //class for Ball scene 4
 class Ball {
   constructor() { //constructor with variable instantiation
