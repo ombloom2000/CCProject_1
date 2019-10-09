@@ -6,9 +6,6 @@ var ballx;
 var bally;
 var speed;
 
-//scene 1 lines
-var y2;
-
 //second scene ball expand
 var diam;
 var opadd;
@@ -42,9 +39,6 @@ function setup() {
   bally=height;
   speed=5;
 
-  //scene 1 lines
-  y2=height;
-
   //scene 2
   diam = 800;
   opadd = map(diam, 800,0,20,255); //map of diameter of circle to the opactity/alpha value
@@ -61,25 +55,22 @@ function setup() {
 }
 
 function draw() { 
-  if(millis()<7000){
-  //scene1lines();//see function below
+  if(millis()<7500){
   scene1(); //see function below
-  //print("current time: "+ millis());
-  //print("Time: " + timeofLastSwitch);
   }
-  if (millis()>7000) { //if 
+  if (millis()>7500) { //if 
     //timeofLastSwitch = currentTime;
     background(0);
     scene2(); //see scene 2 below
   }
-  if(millis()>8000){ //if the circle's diameter is bigger than the window width
+  if(millis()>9000){ //if the circle's diameter is bigger than the window width
     noStroke();
     background(255); //clear background
     bknd = map(rainy, 0,height,255,0); //set background to a shade of gray mapping to screen height
     background(bknd);
     scene3(); //see function below
      }
-  if (millis()>9000) { //if row of balls drops below screen
+  if (millis()>10000) { //if row of balls drops below screen
     scene4(); //see function below
   }
   if (millis()>14000) { //if counter is 350 (slightly less than the number of balls to be made)
@@ -100,19 +91,15 @@ function scene1() {
   if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
     speed=speed*-1; //reverse direction of speed variable
   }
-  print(millis());
-}
 
-function scene1lines(){
-  //stroke(255,0,0); //stroke settings
   strokeWeight(4);
   for(i=width-15;i>=ballx;i-=30){ //make lines from bottom of screen starting at right side and going up to height of ball bouncing
     var m = map(i,width-15,ballx,255,50); //map the i val from the position of the ball to the amount of red in the lines
     stroke(m,0,0); //stroke settings
-    line(i,height,i,y2);
+    line(i,height,i,bally);
   
   }
-    y2-=2; //incrememnt y2 to make lines come up the screen @ same rate the ball comes up the screen
+
 }
 
 function scene2() { //ADD COMMENTS
