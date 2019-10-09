@@ -18,6 +18,9 @@ var balls;
 //scene 5 grid
 var c;
 
+//scene 6 particles
+var parts;
+
 //SETUP
 function setup() {
   //canvas, background, no stroke
@@ -33,16 +36,16 @@ function setup() {
     var s_ = random(1,7); //starting speed changes with each new object
     var h_ = random(1,100); //starting height changes with each new object
     var d_ = random(0.5,10);//starting diametr changes with each new object
-    wallballs[i] = new WallBall(0,x_,height-h_,s_,d_); //at each array location, make a new ball object will varying paramenters
+    wallballs[i] = new WallBall(0,x_,height-h_,s_,d_); //at each array location, make a new ball object with varying paramenters
   }
 
   //scene 2
   concentrics = [];
-  for(i=0;i<5;i++){
-    var d_ = random(200,800);
-    var x_ = 100+300*i;
-    var y_ = random(height);
-    concentrics[i] = new Concentric(d_, x_, y_);
+  for(i=0;i<9;i++){ //making an array of 9 objects
+    var d_ = random(200,800); //starting diameter changes with each new object
+    var x_ = 100+300*i; //starting x position changes with each new object
+    var y_ = random(height);//starting y position changes with each new object
+    concentrics[i] = new Concentric(d_, x_, y_); //at each array location, make a new concentric circle with varying parameters
   }
 
   //scene 3
@@ -51,11 +54,15 @@ function setup() {
 
   //scene 4
   balls = new Array(800); //array length 400
-
   for(i=0;i<balls.length;i++){
    balls[i] = new Ball(); //make objects to fill array
   }
 
+  //scene 6
+  parts = [];
+  for(i=0;i<500;i++){ //make an array of 500 objects at random positions
+     parts[i] = new Particle(random(width),random(height),40);
+  }
 }
 
 //DRAW
@@ -74,15 +81,19 @@ function draw() {
     background(bknd);
     scene3();
      }
-  if (millis()>10000 && millis()<14000) { //within time range
+  if (millis()>10000 && millis()<12500) { //within time range
     scene4(); //see function below
   }
-  if (millis()>14000 && millis()<17000) { //within time range
+  if (millis()>12500 && millis()<15000) { //within time range
     background(0); 
     scene5(width/2,height/2); //passing width and height of screen as random limits
   }
-  if(millis()>17000){//within time range
-    background(175,0,0);
+  if(millis()>15000 && millis()<27000){//within time range
+    background(255,25,0);
+    scene6();
+  }
+  if(millis()>27000){
+    background(255);
   }
 }
 
@@ -97,7 +108,7 @@ function scene1() {
 
 function scene2() { 
   for(i=0;i<concentrics.length;i++){
-    concentrics[i].move();
+    concentrics[i].move(); //call move and show for each object in the concentrics array
     concentrics[i].show();
   }
 
@@ -112,7 +123,7 @@ function scene3() {
 }
 
 //concept of making an array of objects is inspired by a lesson from Learning Processing by 
-  //Daniel Shiffman, but has been altered and rewritten in p5.js
+  //Daniel Shiffman, but has been altered to a different syntax and rewritten in p5.js
 function scene4() {
   background(0); //clear background
   for (i = 0; i<balls.length; i++) { //for each Ball object in the array
@@ -130,6 +141,13 @@ function scene5(w,h){
     fill(c);
     rect(i,j,random(w),random(h)); //random size rect based on passed values
     }
+  }
+}
+
+function scene6(){
+  for(i=0;i<parts.length;i++){ //for each object in the array, call move and show
+    parts[i].move();
+    parts[i].show();
   }
 }
 
@@ -165,7 +183,7 @@ class WallBall{
 
 //class for Concentric scene 2
 class Concentric{
-  constructor(diam,x,y){
+  constructor(diam,x,y){ 
     this.diam = diam;
     this.x = x;
     this.y = y;
@@ -201,5 +219,25 @@ class Ball {
     fill(random(255), 0, 0); //set ball color to orangey red variation
     noStroke(); //no stroke
     ellipse(this.x, this.y, this.diameter, this.diameter); //make ellipse/ball at random x pos, y pos 0, and width and height of diameter
+  }
+}
+
+class Particle{
+  constructor(x,y,d){ //3 parameters
+    this.xpos = x;
+    this.ypos = y;
+    this.d = d;
+
+  }
+ 
+  move(){ //make each object move in random left/right/up/down
+    this.xpos+=random(-5,5);
+    this.ypos+=random(-5,5);
+    this.d+=0.3; //increase diameter of each ellipse
+  }
+
+  show(){
+    fill(255); //make the ellipses
+    ellipse(this.xpos,this.ypos,this.d,this.d);
   }
 }
