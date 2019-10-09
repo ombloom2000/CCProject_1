@@ -1,4 +1,5 @@
 //variable declaration
+
 //for first scene ball bounce
 var opacity;
 var ballx;
@@ -33,6 +34,7 @@ function setup() {
   noStroke();
 
   //variable instantiation
+
   //scene 1
   opacity = 0;
   fill(0, 0, 0);
@@ -45,7 +47,7 @@ function setup() {
 
   //scene 2
   diam = 800;
-  opadd = map(diam, 800,0,6,255); //map of diameter of circle to the opactity/alpha value
+  opadd = map(diam, 800,0,20,255); //map of diameter of circle to the opactity/alpha value
 
   //scene 3
   rainx = 15;
@@ -59,25 +61,28 @@ function setup() {
 }
 
 function draw() { 
-  scene1lines();//see function below
+  if(millis()<7000){
+  //scene1lines();//see function below
   scene1(); //see function below
-  if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
-    scene1reversedir(); //see function below
+  //print("current time: "+ millis());
+  //print("Time: " + timeofLastSwitch);
   }
-  if (bally<= 0) { //if ball reaches top of screen
+  if (millis()>7000) { //if 
+    //timeofLastSwitch = currentTime;
+    background(0);
     scene2(); //see scene 2 below
   }
-  if(diam<=-windowWidth){ //if the circle's diameter is bigger than the window width
+  if(millis()>8000){ //if the circle's diameter is bigger than the window width
     noStroke();
     background(255); //clear background
     bknd = map(rainy, 0,height,255,0); //set background to a shade of gray mapping to screen height
     background(bknd);
     scene3(); //see function below
      }
-  if (rainy>height) { //if row of balls drops below screen
+  if (millis()>9000) { //if row of balls drops below screen
     scene4(); //see function below
   }
-  if (count >= 350) { //if counter is 350 (slightly less than the number of balls to be made)
+  if (millis()>14000) { //if counter is 350 (slightly less than the number of balls to be made)
     background(0); //clear background with black
     scene5(width/2,height/2); //see function below, passing width and height of screen as random limits
   }
@@ -92,10 +97,10 @@ function scene1() {
   opacity+=0.8; //increase opacity
   ballx+=speed; //move ballx
   bally-=2; //move bally
-}
-
-function scene1reversedir() { 
-  speed=speed*-1; //reverse direction of speed variable
+  if (ballx >= width || ballx<=0) { //reverse direction if ball goes out of bounds
+    speed=speed*-1; //reverse direction of speed variable
+  }
+  print(millis());
 }
 
 function scene1lines(){
@@ -126,7 +131,7 @@ function scene3() {
   for (var i =0; i<=width; i++) { //make ellipses across top of screen
     ellipse(rainx*i, rainy, 15, 15*i/2);
   }
-  rainy+=8; //make ellipses fall
+  rainy+=15; //make ellipses fall
 }
 
 function scene4() {
