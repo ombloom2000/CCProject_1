@@ -26,7 +26,7 @@ function setup() {
   //canvas, background, no stroke
   frameRate(70);
   createCanvas(windowWidth,windowHeight);
-  background(0); 
+  background(255); 
   noStroke();
   //variable instantiation
   //scene 1
@@ -60,8 +60,8 @@ function setup() {
 
   //scene 6
   parts = [];
-  for(i=0;i<500;i++){ //make an array of 500 objects at random positions
-     parts[i] = new Particle(random(width),random(height),40);
+  for(i=0;i<500;i++){ //make an array of 500 objects at random positions, diameter
+     parts[i] = new Particle(random(width),random(height),10);
   }
 }
 
@@ -74,25 +74,25 @@ function draw() {
     //background(0);
     scene2(); 
   }
-  if(millis()>9000 && millis()<10000){ //within time range
+  if(millis()>9000 && millis()<11000){ //within time range
     noStroke();
     background(255); 
-    bknd = map(rainy, 0,height,255,0); //set background to a shade of gray mapping to screen height
+    bknd = map(rainy, 0,height,0,255); //set background to a shade of gray mapping to screen height
     background(bknd);
     scene3();
      }
-  if (millis()>10000 && millis()<12500) { //within time range
+  if (millis()>11000 && millis()<13500) { //within time range
     scene4(); //see function below
   }
-  if (millis()>12500 && millis()<15000) { //within time range
+  if (millis()>13500 && millis()<16000) { //within time range
     background(0); 
     scene5(width/2,height/2); //passing width and height of screen as random limits
   }
-  if(millis()>15000 && millis()<27000){//within time range
+  if(millis()>16000 && millis()<28000){//within time range
     background(255,25,0);
     scene6();
   }
-  if(millis()>27000){
+  if(millis()>28000){
     background(255);
   }
 }
@@ -115,11 +115,11 @@ function scene2() {
 }
 
 function scene3() {
-  fill(255,0,0);
+  fill(random(200,255),random(150,255),0);
   for (var i =0; i<=width; i++) { //make ellipses across top of screen
-    ellipse(rainx*i, rainy, 15, 15*i/2);
+    ellipse(rainx*i, rainy+random(0,100), 15, 15*i/2);
   }
-  rainy+=15; //make ellipses fall
+  rainy+=random(0,12); //make ellipses fall
 }
 
 //concept of making an array of objects is inspired by a lesson from Learning Processing by 
@@ -136,7 +136,7 @@ function scene5(w,h){
   stroke(255);
   strokeWeight(0.3);
   for(i =10;i<=width-20;i+=20){ //create a grid of varying sizes of rectangles
-    c = color(random(255),random(10),0); //set a new fill of a random red/orange fir each column
+    c = color(random(150,255),random(200,255),0); //set a new fill of a random red/orange fir each column
     for(j=10;j<=height;j+=20){
     fill(c);
     rect(i,j,random(w),random(h)); //random size rect based on passed values
@@ -176,7 +176,7 @@ class WallBall{
 
   show(){
    noStroke();
-   fill(random(100,255), 0,0,this.opacity); //set fill to a various red-orange with given opacity
+   fill(255,random(150,255),0,this.opacity); //set fill to a various red-orange with given opacity
    ellipse(this.ballx,this.bally,this.diameter,this.diameter); //make an ellipse at ballx,bally with passed params
   }
 }
@@ -195,7 +195,7 @@ class Concentric{
   }
 
   show(){
-   fill(random(80,255),0,0,this.opadd); //fill with red orange and alpha that maps diam
+   fill(255,random(100,255),0,this.opadd); //fill with red orange and alpha that maps diam
    stroke(255);
    ellipse(this.x,this.y, this.diam,this.diam); //draw ellipse with passed parameters
    strokeWeight(random(1,4));
@@ -216,7 +216,7 @@ class Ball {
   }
 
   show() { //display method
-    fill(random(255), 0, 0); //set ball color to orangey red variation
+    fill(random(150,255),random(150,255), 0); //set ball color to orangey red variation
     noStroke(); //no stroke
     ellipse(this.x, this.y, this.diameter, this.diameter); //make ellipse/ball at random x pos, y pos 0, and width and height of diameter
   }
@@ -234,6 +234,10 @@ class Particle{
     this.xpos+=random(-5,5);
     this.ypos+=random(-5,5);
     this.d+=0.3; //increase diameter of each ellipse
+    if(this.d>=60){ //particles grow till they reach a diameter of 60
+      this.d = 60;
+    }
+   
   }
 
   show(){
