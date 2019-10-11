@@ -61,7 +61,7 @@ function setup() {
   //scene 6
   parts = [];
   for(i=0;i<500;i++){ //make an array of 500 objects at random positions, diameter
-     parts[i] = new Particle(random(width),random(height),10);
+     parts[i] = new Particle(random(width),random(height),30);
   }
 }
 
@@ -88,12 +88,9 @@ function draw() {
     background(0); 
     scene5(width/2,height/2); //passing width and height of screen as random limits
   }
-  if(millis()>16000 && millis()<28000){//within time range
-    background(255,25,0);
-    scene6();
-  }
-  if(millis()>28000){
+  if(millis()>16000){//within time range
     background(255);
+    scene6();
   }
 }
 
@@ -125,7 +122,7 @@ function scene3() {
 //concept of making an array of objects is inspired by a lesson from Learning Processing by 
   //Daniel Shiffman, but has been altered to a different syntax and rewritten in p5.js
 function scene4() {
-  background(0); //clear background
+  background(255); //clear background
   for (i = 0; i<balls.length; i++) { //for each Ball object in the array
     balls[i].move(); //move and display the ball
     balls[i].show(); 
@@ -227,13 +224,20 @@ class Particle{
     this.xpos = x;
     this.ypos = y;
     this.d = d;
+    this.accel = 0;
+    this.alpha = 0;
 
   }
  
   move(){ //make each object move in random left/right/up/down
-    this.xpos+=random(-5,5);
-    this.ypos+=random(-5,5);
-    this.d+=0.3; //increase diameter of each ellipse
+    this.accel+=0.05;
+    this.alpha+=0.5;
+    this.xpos+=random(-this.accel,this.accel);
+    this.ypos+=random(-this.accel,this.accel);
+    if(this.accel>=6){
+      this.accel = 6;
+    }
+    this.d+=0.1; //increase diameter of each ellipse
     if(this.d>=60){ //particles grow till they reach a diameter of 60
       this.d = 60;
     }
@@ -241,7 +245,8 @@ class Particle{
   }
 
   show(){
-    fill(255); //make the ellipses
+    fill(random(200,255),random(100,255),0, this.alpha); //make the ellipses
+    stroke(0);
     ellipse(this.xpos,this.ypos,this.d,this.d);
   }
 }
